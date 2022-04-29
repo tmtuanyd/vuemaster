@@ -2,9 +2,11 @@ import { createApp } from "vue";
 import App from "./App.vue";
 import router from "@/router";
 // import AppDate from "@/components/AppDate";
+import store from "@/store"
 
 const forumApp = createApp(App);
 forumApp.use(router);
+forumApp.use(store)
 
 const requireComponent = require.context("./components", true, /^Base[A-Z]/);
 requireComponent.keys().forEach(function (fileName) {
