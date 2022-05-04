@@ -5,8 +5,11 @@ import Forum from "@/pages/Forum";
 import Category from "@/pages/Category";
 import { createRouter, createWebHistory } from "vue-router";
 import sourceData from "@/data.json";
+import Profile from "@/pages/Profile";
+
 const routes = [
   { path: "/", name: "Home", component: PageHome },
+  { path: "/me", name: "Profile", component: Profile },
   { path: "/forum/:id", name: "Forum", component: Forum, props: true },
   { path: "/category/:id", name: "Category", component: Category, props: true },
   {
