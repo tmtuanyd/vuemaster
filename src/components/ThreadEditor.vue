@@ -1,10 +1,63 @@
 <template>
-$END$
+  <form @submit.prevent="save">
+    <div class="form-group">
+      <label for="thread_title">Title:</label>
+      <input
+        id="thread_title"
+        v-model="form.title"
+        class="form-input"
+        name="title"
+        type="text"
+      />
+    </div>
+
+    <div class="form-group">
+      <label for="thread_content">Content:</label>
+      <textarea
+        id="thread_content"
+        v-model="form.text"
+        class="form-input"
+        cols="140"
+        name="content"
+        rows="8"
+      ></textarea>
+    </div>
+
+    <div class="btn-group">
+      <button class="btn btn-ghost" @click.prevent="$emit('cancel')">Cancel</button>
+      <button class="btn btn-blue" name="Publish" type="submit">
+        {{ existing ? 'Update' : "Publish" }}
+      </button>
+    </div>
+  </form>
 </template>
 
 <script>
 export default {
-name: "ThreadEditor"
+  name: "ThreadEditor",
+  props: {
+    title: {type: String, default: ''},
+    text: {type: String, default: ''}
+  },
+  data() {
+    return {
+      form: {
+        title: this.title,
+        text: this.text
+      }
+
+    }
+  },
+  computed: {
+    existing() {
+      return !!this.title
+    }
+  },
+  methods: {
+    save() {
+      this.$emit('save', {...this.form})
+    }
+  }
 }
 </script>
 

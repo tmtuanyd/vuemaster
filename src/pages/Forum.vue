@@ -5,20 +5,22 @@
         <h1>{{ forum.name }}</h1>
         <p class="text-leads">Discuss your passion for food and cooking</p>
       </div>
-      <a href="#" class="btn-green btn-small">Start a thread</a>
+      <router-link :to="{name: 'ThreadCreate', params: {forumId: forum.id}}" class="btn-green btn-small">Start a thread
+      </router-link>
     </div>
   </div>
 
   <div class="col-full">
-    <thread-list :threads="threads" />
+    <thread-list :threads="threads"/>
   </div>
 </template>
 
 <script>
 
 import ThreadList from "@/components/ThreadList.vue";
+
 export default {
-  components: { ThreadList },
+  components: {ThreadList},
   props: {
     id: {
       required: true,
@@ -30,7 +32,7 @@ export default {
       return this.$store.state.forums.find((forum) => forum.id === this.id);
     },
     threads() {
-      return  this.$store.state.threads.filter((thread) => thread.forumId === this.id);
+      return this.$store.state.threads.filter((thread) => thread.forumId === this.id);
     },
   },
 };

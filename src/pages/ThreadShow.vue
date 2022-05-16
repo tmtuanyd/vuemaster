@@ -1,20 +1,37 @@
 <template>
   <div class="col-large push-top">
-    <h1>{{ thread.title }}</h1>
+    <h1>{{ thread.title }}
+      <router-link :to="{name: 'ThreadEdit', id: this.id}" class="btn-small btn-green">
+        Edit Thread
+      </router-link>
+    </h1>
 
-    <post-list :posts="threadPosts" />
+    <p>
+      By <a class="link-unstyled" href="#">{{ thread.author.name }}</a>,
+      <app-date :timestamp="thread.publishedAt"/>
+      .
+      <span
+        class="hide-mobile text-faded text-small"
+        style="margin-top: 2px;"
+      >{{ thread.repliesCount }} replies by {{ thread.contributorsCount }} contributors</span
+      >
+    </p>
 
-    <post-editor @save="addPost" />
+    <post-list :posts="threadPosts"/>
+
+    <post-editor @save="addPost"/>
   </div>
 </template>
 
 <script>
 import PostList from "@/components/PostList.vue";
 import PostEditor from "@/components/PostEditor.vue";
+import AppDate from "@/components/AppDate";
 
 export default {
   name: "ThreadShow",
   components: {
+    AppDate,
     PostList,
     PostEditor,
   },
@@ -30,14 +47,14 @@ export default {
     };
   },
   computed: {
-    threads(){
+    threads() {
       return this.$store.state.threads
     },
-    posts(){
+    posts() {
       return this.$store.state.posts
     },
     thread() {
-      return this.threads.find((thread) => thread.id === this.id);
+      return this.$store.getters.thread(this.id);
     },
     threadPosts() {
       return this.posts.filter((post) => post.threadId === this.id);
